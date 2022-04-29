@@ -18,10 +18,14 @@ namespace MVCHomework6.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        [Route("{tag?}")]
+        public IActionResult Index(string tag)
         {
-            //這是範例，已經塞了20筆資料進去
-            var model=_context.Articles.ToList();
+            var model = new List<Articles>();
+            if (string.IsNullOrWhiteSpace(tag) == false)
+                model = _context.Articles.Where(m => m.Tags.Contains(tag)).ToList();
+            else
+                model = _context.Articles.ToList();//這是範例，已經塞了20筆資料進去
             return View(model);
         }
 
