@@ -10,7 +10,7 @@
         <div class="card-body">
             <h5 class="card-title">@item.Title</h5>
             <p class="card-text">@Html.Raw(item.Body)</p>
-            <a href="#" class="card-link">@item.Tags</a>
+            <partial name="_TagList" model="item.Tags"></partial>
         </div>
         <div class="card-footer text-muted">
             Posted on @item.CreateDate.ToString("yyyy-MM-dd") by me
