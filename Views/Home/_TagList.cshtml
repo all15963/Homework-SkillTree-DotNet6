@@ -7,10 +7,10 @@
 
 @model string
 
-<ul>
+<ul class="p-0">
     @foreach (var item in Model.Split(","))
     {
-        <li class="d-inline p-2">
+        <li class="d-inline pe-2">
             <a asp-action="Index" asp-controller="Home" asp-area="" asp-route-tag="@item">@item</a>
         </li>
     }
