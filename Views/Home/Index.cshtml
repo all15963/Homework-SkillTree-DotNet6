@@ -1,7 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model IEnumerable<MVCHomework6.Data.Database.Articles>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@model IPagedList<MVCHomework6.Data.Database.Articles>
+
+@section Head{
+    <link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
+}
 
 @foreach (var item in Model)
 {
@@ -11,6 +17,7 @@
             <h5 class="card-title">@item.Title</h5>
             <p class="card-text">@Html.Raw(item.Body)</p>
             <partial name="_TagList" model="item.Tags"></partial>
+            @*<tags>@item.Tags</tags>*@
         </div>
         <div class="card-footer text-muted">
             Posted on @item.CreateDate.ToString("yyyy-MM-dd") by me
@@ -18,17 +25,4 @@
     </div>
 }
 
-
-<nav class="mt-4">
-    <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link">Previous</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-        </li>
-    </ul>
-</nav>
+@Html.PagedListPager( Model, page => Url.Action("Index", new { page }) )

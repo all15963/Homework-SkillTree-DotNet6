@@ -3,6 +3,7 @@ using MVCHomework6.Models;
 using System.Diagnostics;
 using MVCHomework6.Data;
 using MVCHomework6.Data.Database;
+using X.PagedList;
 
 namespace MVCHomework6.Controllers
 {
@@ -19,14 +20,18 @@ namespace MVCHomework6.Controllers
         }
 
         [Route("{tag?}")]
-        public IActionResult Index(string tag)
+        public IActionResult Index(string tag, int? page)
         {
-            var model = new List<Articles>();
+            var pageNumber = page ?? 1;
+            var articles = (IQueryable<Articles>)_context.Articles;
+
             if (string.IsNullOrWhiteSpace(tag) == false)
-                model = _context.Articles.Where(m => m.Tags.Contains(tag)).ToList();
-            else
-                model = _context.Articles.ToList();//這是範例，已經塞了20筆資料進去
-            return View(model);
+                articles = articles.Where(m => m.Tags.Contains(tag));
+
+            // 每5筆為一分頁
+            var onePageOfArticles = articles.ToPagedList(pageNumber, 5);
+
+            return View(onePageOfArticles);
         }
 
         public IActionResult Privacy()
