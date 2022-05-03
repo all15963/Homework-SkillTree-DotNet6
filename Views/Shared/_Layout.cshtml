@@ -7,15 +7,6 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MVCHomework6.styles.css" asp-append-version="true" />
-    @if (IsSectionDefined("Head"))
-    {
-        @await RenderSectionAsync("Head")
-    }
-    else
-    {
-        
-    }
-
 </head>
 <body>
 <header>
@@ -58,20 +49,7 @@
                     </form>
                 </div>
             </div>
-            <div class="card mb-1">
-                <div class="card-header">
-                    Tags
-                </div>
-                <div class="card-body">
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><button type="button" class="btn">demo<span class="badge bg-secondary">5</span></button></li>
-                        <li class="list-inline-item"><button type="button" class="btn">SkillTree<span class="badge bg-secondary">108</span></button></li>
-                        <li class="list-inline-item"><button type="button" class="btn">MVC<span class="badge bg-secondary">6</span></button></li>
-                        <li class="list-inline-item"><button type="button" class="btn">twMVC<span class="badge bg-secondary">87</span></button></li>
-                        <li class="list-inline-item"><button type="button" class="btn">dotBlogs<span class="badge bg-secondary">1024</span></button></li>
-                    </ul>
-                </div>
-            </div>
+            <vc:tag-cloud one="1" two="2"></vc:tag-cloud>
             <div class="card mb-1">
                 <div class="card-header">
                     Featured
