@@ -5,10 +5,6 @@
 @using X.PagedList;
 @model IPagedList<MVCHomework6.Data.Database.Articles>
 
-@section Head{
-    <link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
-}
-
 @foreach (var item in Model)
 {
     <div class="card mt-5">
@@ -16,8 +12,16 @@
         <div class="card-body">
             <h5 class="card-title">@item.Title</h5>
             <p class="card-text">@Html.Raw(item.Body)</p>
-            <partial name="_TagList" model="item.Tags"></partial>
-            @*<tags>@item.Tags</tags>*@
+            @*<partial name="_TagList" model="item.Tags"></partial>*@
+            <ul class="p-0">
+                @foreach (var tag in item.Tags.Split(","))
+                {
+                    <li class="d-inline pe-2">
+                        <tags>@tag</tags>
+                    </li>
+                }
+            </ul>
+            
         </div>
         <div class="card-footer text-muted">
             Posted on @item.CreateDate.ToString("yyyy-MM-dd") by me

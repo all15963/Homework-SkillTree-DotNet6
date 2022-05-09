@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using MVCHomework6.Data;
 using MVCHomework6.Data.Database;
@@ -5,6 +8,12 @@ using MVCHomework6.Data.Database;
 var builder = WebApplication.CreateBuilder(args);
 //本範例使用 EntityFramework inMemory 沒有實體資料庫全部在記憶體內（對於測試和POC是非常好用的）
 builder.Services.AddDbContext<BlogDbContext>(options => options.UseInMemoryDatabase("SkillTreeBlog"));
+
+// IActionContextAccessor DI
+builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+// IUrlHelperFactory DI
+builder.Services.AddSingleton<IUrlHelperFactory, UrlHelperFactory>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
