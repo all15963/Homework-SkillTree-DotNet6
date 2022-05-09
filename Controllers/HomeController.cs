@@ -20,13 +20,16 @@ namespace MVCHomework6.Controllers
         }
 
         [Route("{tag?}")]
-        public IActionResult Index(string tag, int? page)
+        public IActionResult Index(string tag, int? page, string? keyword)
         {
             var pageNumber = page ?? 1;
             var articles = (IQueryable<Articles>)_context.Articles;
 
             if (string.IsNullOrWhiteSpace(tag) == false)
                 articles = articles.Where(m => m.Tags.Contains(tag));
+
+            if (string.IsNullOrWhiteSpace(keyword) == false)
+                articles = articles.Where(m => m.Title.Contains(keyword) || m.Body.Contains(keyword));
 
             // 每5筆為一分頁
             var onePageOfArticles = articles.ToPagedList(pageNumber, 5);

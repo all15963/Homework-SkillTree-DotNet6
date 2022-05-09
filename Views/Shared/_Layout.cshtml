@@ -41,15 +41,15 @@
                     Search
                 </div>
                 <div class="card-body">
-                    <form method="get">
+                    <form asp-action="Index" asp-controller="Home" asp-area="" method="get">
                         <div class="input-group mb-3">
-                            <input type="text" name="q" class="form-control" placeholder="Search for...">
+                            <input type="text" name="keyword" class="form-control" placeholder="Search for...">
                             <button class="btn btn-outline-secondary">Go!</button>
                         </div>
                     </form>
                 </div>
             </div>
-            <vc:tag-cloud one="1" two="2"></vc:tag-cloud>
+            <vc:tag-cloud></vc:tag-cloud>
             <div class="card mb-1">
                 <div class="card-header">
                     Featured
