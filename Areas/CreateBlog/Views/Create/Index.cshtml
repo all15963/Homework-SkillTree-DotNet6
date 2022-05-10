@@ -2,7 +2,46 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    Layout = "_Layout";
 }
+@model MVCHomework6.Areas.CreateBlog.Models.CreateBlogViewModel
 
-AAAAAAA
+<div class="card">
+    <form asp-action="Index" asp-controller="Create" asp-area="CreateBlog" method="post" enctype="multipart/form-data">
+        <div class="card-body">
+            <div class="validation-summary-errors" data-valmsg-summary="true"></div>
+            <div class="row mb-2">
+                <label asp-for=Title></label>
+                <input asp-for=Title class="form-control" />
+                <span asp-validation-for=Title class="form-text text-danger"></span>
+            </div>
+            <div class="row mb-2">
+                <label asp-for=Body></label>
+                <textarea asp-for=Body class="form-control" ></textarea>
+                <span asp-validation-for=Body class="form-text text-danger"></span>
+            </div>
+            <div class="row mb-2">
+                <label asp-for=CoverPhoto></label>
+                <input asp-for=CoverPhoto type="file" class="form-control" />
+                <span asp-validation-for=CoverPhoto class="form-text text-danger"></span>
+            </div>
+            <div class="row mb-2">
+                <label asp-for=CreateDate></label>
+                <input asp-for=CreateDate class="form-control" />
+                <span asp-validation-for=CreateDate class="form-text text-danger"></span>
+            </div>
+            <div class="row mb-2">
+                <label asp-for=Tags></label>
+                <input asp-for=Tags class="form-control" />
+                <span asp-validation-for=Tags class="form-text text-danger"></span>
+            </div>
+
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">提交</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+
+}
