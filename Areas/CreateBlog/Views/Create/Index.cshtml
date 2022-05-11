@@ -5,6 +5,11 @@
 }
 @model MVCHomework6.Areas.CreateBlog.Models.CreateBlogViewModel
 
+@section Head{
+    <link rel="stylesheet" href="~/lib/pickadate.js-3.6.2/lib/themes/default.css" />
+    <link rel="stylesheet" href="~/lib/pickadate.js-3.6.2/lib/themes/default.date.css" />
+}
+
 <div class="card">
     <form asp-action="Index" asp-controller="Create" asp-area="CreateBlog" method="post" enctype="multipart/form-data">
         <div class="card-body">
@@ -26,7 +31,7 @@
             </div>
             <div class="row mb-2">
                 <label asp-for=CreateDate></label>
-                <input asp-for=CreateDate class="form-control" />
+                <input asp-for=CreateDate class="form-control create-date" data-value="@DateTime.Now.ToString("yyyy/MM/dd")" />
                 <span asp-validation-for=CreateDate class="form-text text-danger"></span>
             </div>
             <div class="row mb-2">
@@ -43,5 +48,11 @@
 </div>
 
 @section Scripts{
-
+    <script src="~/lib/pickadate.js-3.6.2/lib/picker.js"></script>
+    <script src="~/lib/pickadate.js-3.6.2/lib/picker.date.js"></script>
+    <script>
+        $('.create-date').pickadate({
+            format: "yyyy/mm/dd"
+        });
+    </script>
 }

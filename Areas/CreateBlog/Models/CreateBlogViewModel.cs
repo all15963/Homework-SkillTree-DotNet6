@@ -16,6 +16,7 @@ namespace MVCHomework6.Areas.CreateBlog.Models
         [Display(Name = "封面照")]
         public IFormFile CoverPhoto { get; set; }
 
+        [Required(ErrorMessage = "請選擇{0}")]
         [Display(Name = "創建日期")]
         public DateTime CreateDate { get; set; }
 
