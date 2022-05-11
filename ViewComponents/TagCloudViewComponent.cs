@@ -17,21 +17,7 @@ namespace MVCHomework6.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var tags = new List<string>() { "SkillTree", "twMVC", "demoshop", "Dotblogs", "MVC" };
-            var tagCloud = new List<TagCloudViewModel>();
-
-            foreach (var item in tags)
-            {
-                var tagCloudViewModel = new TagCloudViewModel
-                {
-                    Tag = item,
-                    Count = _context.Articles.Where(m => m.Tags.Contains(item)).Count()
-                };
-
-                tagCloud.Add(tagCloudViewModel);
-            }
-
-            return View(tagCloud);
+            return View(_context.TagCloud.ToList());
         }
     }
 }

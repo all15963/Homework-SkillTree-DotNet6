@@ -3,7 +3,7 @@
 *@
 @{
 }
-@model IEnumerable<MVCHomework6.Models.TagCloudViewModel>
+@model IEnumerable<MVCHomework6.Data.Database.TagCloud>
 
 <div class="card mb-1">
                 <div class="card-header">
@@ -14,9 +14,9 @@
                         @foreach (var item in Model)
                         {
                             <li class="list-inline-item">
-                                <a class="btn" asp-action="Index" asp-controller="Home" asp-area="" asp-route-tag="@item.Tag">
-                                    @item.Tag
-                                    <span class="badge bg-secondary">@item.Count</span>
+                                <a class="btn" asp-action="Index" asp-controller="Home" asp-area="" asp-route-tag="@item.Name">
+                                    @item.Name
+                                    <span class="badge bg-secondary">@item.Amount</span>
                                 </a>
                             </li>
                         }
