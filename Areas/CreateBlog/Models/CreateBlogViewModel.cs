@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVCHomework6.Areas.CreateBlog.Models
 {
@@ -22,6 +23,8 @@ namespace MVCHomework6.Areas.CreateBlog.Models
 
         [Required(ErrorMessage = "請選擇{0}")]
         [Display(Name = "標籤")]
-        public string? Tags { get; set; }
+        public IEnumerable<string>? Tags { get; set; }
+
+        public IEnumerable<SelectListItem>? TagCloud { get; set; }
     }
 }

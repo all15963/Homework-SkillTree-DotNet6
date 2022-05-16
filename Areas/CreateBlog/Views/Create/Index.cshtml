@@ -8,6 +8,8 @@
 @section Head{
     <link rel="stylesheet" href="~/lib/pickadate.js-3.6.2/lib/themes/default.css" />
     <link rel="stylesheet" href="~/lib/pickadate.js-3.6.2/lib/themes/default.date.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 }
 
 <div class="card">
@@ -36,23 +38,30 @@
             </div>
             <div class="row mb-2">
                 <label asp-for=Tags></label>
-                <input asp-for=Tags class="form-control" />
+                <select asp-for="Tags" asp-items="Model.TagCloud" class="js-example-basic-multiple" multiple="multiple">
+                </select>
                 <span asp-validation-for=Tags class="form-text text-danger"></span>
             </div>
-
         </div>
         <div class="card-footer">
             <button type="submit" class="btn btn-primary">提交</button>
         </div>
     </form>
+    <span class="text-danger">@(ViewData["msg"])</span>
 </div>
 
 @section Scripts{
     <script src="~/lib/pickadate.js-3.6.2/lib/picker.js"></script>
     <script src="~/lib/pickadate.js-3.6.2/lib/picker.date.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
     <script>
         $('.create-date').pickadate({
             format: "yyyy/mm/dd"
+        });
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
         });
     </script>
 }
