@@ -33,6 +33,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="CreateBlog" asp-controller="Create" asp-action="Index">Create</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -60,12 +63,11 @@
             <vc:tag-cloud></vc:tag-cloud>
             <div class="card mb-1">
                 <div class="card-header">
-                    Featured
+                    Google Search
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <script async src="https://cse.google.com/cse.js?cx=c2098778bcd7c6ede"></script>
+                    <div class="gcse-searchbox-only" data-resultsUrl="@Url.Action("Index", "Home", new { area="GoogleSearch" })"></div>
                 </div>
             </div>
         </div>
