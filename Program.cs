@@ -1,13 +1,19 @@
+using Arch.EntityFrameworkCore.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
+using MVCHomework6.Areas.CreateBlog.Services;
 using MVCHomework6.Data;
 using MVCHomework6.Data.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 //本範例使用 EntityFramework inMemory 沒有實體資料庫全部在記憶體內（對於測試和POC是非常好用的）
-builder.Services.AddDbContext<BlogDbContext>(options => options.UseInMemoryDatabase("SkillTreeBlog"));
+builder.Services.AddDbContext<BlogDbContext>(
+    options => options.UseInMemoryDatabase("SkillTreeBlog")
+    ).AddUnitOfWork<BlogDbContext>();
+
+builder.Services.AddTransient<ITagCloudUnitOfWorkService, TagCloudUnitOfWorkService>();
 
 // IActionContextAccessor DI
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
