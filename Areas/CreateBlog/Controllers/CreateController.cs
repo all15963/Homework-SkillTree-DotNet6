@@ -12,14 +12,17 @@ namespace MVCHomework6.Areas.CreateBlog.Controllers
         private readonly ILogger<CreateController> _logger;
         private readonly BlogDbContext _context;
         private readonly ITagCloudUnitOfWorkService _tagCloudService;
+        private readonly IArticleUnitOfWorkService _articleService;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        
-        public CreateController(ILogger<CreateController> logger, BlogDbContext context, IWebHostEnvironment environment, ITagCloudUnitOfWorkService tagCloudService)
+        public CreateController(ILogger<CreateController> logger, BlogDbContext context,
+            IWebHostEnvironment environment, ITagCloudUnitOfWorkService tagCloudService, 
+            IArticleUnitOfWorkService articleService)
         {
             _logger = logger;
             _context = context;
             _tagCloudService = tagCloudService;
             _webHostEnvironment = environment;
+            _articleService = articleService;
         }
 
         public IActionResult Index()
@@ -39,33 +42,11 @@ namespace MVCHomework6.Areas.CreateBlog.Controllers
             if (ModelState.IsValid)
             {
                 string uploads = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
-                string filePath = string.Empty;
-                var suffix = Path.GetExtension(model.CoverPhoto.FileName);
-                var fileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-                if (model.CoverPhoto.Length > 0)
-                {
-                    filePath = Path.Combine(uploads, fileName + suffix);
-                    using (Stream fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await model.CoverPhoto.CopyToAsync(fileStream);
-                        await fileStream.DisposeAsync();
-                    }
-                }
+                await _articleService.AddArticleAsync(model, uploads);
 
-                var article = new Articles
-                {
-                    Id = Guid.NewGuid(),
-                    Title = model.Title,
-                    Body = model.Body,
-                    CreateDate = model.CreateDate,
-                    CoverPhoto = $"uploads\\{fileName + suffix}",
-                    Tags = string.Join(",", model.Tags)
-                };
-                
-                _context.Add(article);
                 _tagCloudService.UpdateAmount(model.Tags);
+
                 await _tagCloudService.SaveAsync();
-                await _context.SaveChangesAsync();
                 ViewData["msg"] = "新增成功";
             }
 

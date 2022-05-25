@@ -13,6 +13,7 @@ builder.Services.AddDbContext<BlogDbContext>(
     options => options.UseInMemoryDatabase("SkillTreeBlog")
     ).AddUnitOfWork<BlogDbContext>();
 
+builder.Services.AddTransient<IArticleUnitOfWorkService, ArticleUnitOfWorkService>();
 builder.Services.AddTransient<ITagCloudUnitOfWorkService, TagCloudUnitOfWorkService>();
 
 // IActionContextAccessor DI
