@@ -63,6 +63,8 @@ namespace MVCHomework6.Areas.CreateBlog.Controllers
                 };
                 
                 _context.Add(article);
+                _tagCloudService.UpdateAmount(model.Tags);
+                await _tagCloudService.SaveAsync();
                 await _context.SaveChangesAsync();
                 ViewData["msg"] = "新增成功";
             }

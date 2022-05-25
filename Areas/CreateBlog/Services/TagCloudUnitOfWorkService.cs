@@ -32,9 +32,20 @@ namespace MVCHomework6.Areas.CreateBlog.Services
             return tagCloud;
         }
 
+        public void UpdateAmount(IEnumerable<string> tags)
+        {
+            var tagClouds = _blogContext.TagCloud.Where(m => tags.Any(t => t == m.Name)).ToList();
+            foreach (var tagCloud in tagClouds)
+            {
+                tagCloud.Amount += 1;
+            }
+            _tagCloudRepository.Update(tagClouds);
+        }
+
         public async Task SaveAsync()
         {
             await _unitOfWork.SaveChangesAsync();
         }
+
     }
 }
