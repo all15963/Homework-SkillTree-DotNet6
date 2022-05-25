@@ -60,7 +60,9 @@
                     </form>
                 </div>
             </div>
-            <vc:tag-cloud></vc:tag-cloud>
+            <cache expires-after="TimeSpan.FromSeconds(5)">
+                <vc:tag-cloud></vc:tag-cloud>
+            </cache>
             <div class="card mb-1">
                 <div class="card-header">
                     Google Search
