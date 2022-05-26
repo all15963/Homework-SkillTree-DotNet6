@@ -64,6 +64,34 @@ namespace MVCHomework6.Controllers
             return View(articles.ToList());
         }
 
+        public async Task<IActionResult> KeywordList(string keyword)
+        {
+            // 找到快取物件
+            byte[] objectFromCache = await _distributedCache.GetAsync(keyword);
+
+            if (objectFromCache != null)
+            {
+                var jsonToDeserialize = System.Text.Encoding.UTF8.GetString(objectFromCache);
+                var cachedResult = JsonConvert.DeserializeObject<IEnumerable<Articles>>(jsonToDeserialize);
+                if (cachedResult != null)
+                    return View(cachedResult);
+            }
+
+            var articles = (IQueryable<Articles>)_context.Articles;
+
+            if (string.IsNullOrWhiteSpace(keyword) == false)
+                articles = articles.Where(m => m.Title.Contains(keyword) || m.Body.Contains(keyword));
+
+            // Serialize the response
+            byte[] objectToCache = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(articles.ToList());
+            var cacheEntryOptions = new DistributedCacheEntryOptions()
+                .SetSlidingExpiration(TimeSpan.FromSeconds(5))
+                .SetAbsoluteExpiration(TimeSpan.FromSeconds(10));
+
+            // Cache it
+            await _distributedCache.SetAsync(keyword, objectToCache, cacheEntryOptions);
+            return View(articles.ToList());
+        }
 
         public IActionResult Privacy()
         {
