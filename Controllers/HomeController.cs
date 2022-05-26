@@ -4,6 +4,9 @@ using System.Diagnostics;
 using MVCHomework6.Data;
 using MVCHomework6.Data.Database;
 using X.PagedList;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace MVCHomework6.Controllers
 {
@@ -11,31 +14,26 @@ namespace MVCHomework6.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly BlogDbContext _context;
+        private readonly IDistributedCache _distributedCache;
 
 
-        public HomeController(ILogger<HomeController> logger, BlogDbContext context)
+        public HomeController(ILogger<HomeController> logger, BlogDbContext context, IDistributedCache distributedCache)
         {
             _logger       = logger;
             _context = context;
+            _distributedCache = distributedCache;
         }
 
-        [Route("{tag?}")]
-        public IActionResult Index(string tag, int? page, string? keyword)
+        public IActionResult Index(int? page)
         {
             var pageNumber = page ?? 1;
-            var articles = (IQueryable<Articles>)_context.Articles;
-
-            if (string.IsNullOrWhiteSpace(tag) == false)
-                articles = articles.Where(m => m.Tags.Contains(tag));
-
-            if (string.IsNullOrWhiteSpace(keyword) == false)
-                articles = articles.Where(m => m.Title.Contains(keyword) || m.Body.Contains(keyword));
 
             // 每5筆為一分頁
-            var onePageOfArticles = articles.ToPagedList(pageNumber, 5);
+            IPagedList<Articles> onePageOfArticles = _context.Articles.ToPagedList(pageNumber, 5);
 
             return View(onePageOfArticles);
         }
+
 
         public IActionResult Privacy()
         {
