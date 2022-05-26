@@ -20,6 +20,8 @@ builder.Services.AddTransient<ITagCloudUnitOfWorkService, TagCloudUnitOfWorkServ
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 // IUrlHelperFactory DI
 builder.Services.AddSingleton<IUrlHelperFactory, UrlHelperFactory>();
+// DistributedMemoryCache DI
+builder.Services.AddDistributedMemoryCache();
 
 
 // Add services to the container.

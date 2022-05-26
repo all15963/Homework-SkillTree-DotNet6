@@ -18,7 +18,6 @@ namespace MVCHomework6.Helper.Tag
         {
             var actionContext = Accessor.ActionContext;
             var urlHelper = UrlHelperFactory.GetUrlHelper(actionContext);
-            var action = urlHelper.ActionContext.RouteData.Values["action"];
             var controller = urlHelper.ActionContext.RouteData.Values["controller"];
             
             var childContent = await output.GetChildContentAsync();
@@ -26,7 +25,7 @@ namespace MVCHomework6.Helper.Tag
 
             var href = urlHelper.Action(new UrlActionContext
             {
-                Action = (string)action,
+                Action = "TagList",
                 Controller = (string)controller,
                 Values = new { tag = content }
             });

@@ -14,7 +14,7 @@
                         @foreach (var item in Model)
                         {
                             <li class="list-inline-item">
-                                <a class="btn" asp-action="Index" asp-controller="Home" asp-area="" asp-route-tag="@item.Name">
+                                <a class="btn" asp-action="TagList" asp-controller="Home" asp-area="" asp-route-tag="@item.Name">
                                     @item.Name
                                     <span class="badge bg-secondary">@item.Amount</span>
                                 </a>

@@ -34,6 +34,36 @@ namespace MVCHomework6.Controllers
             return View(onePageOfArticles);
         }
 
+        [Route("{Controller}/{Action}/{tag}")]
+        public async Task<IActionResult> TagList(string tag)
+        {
+            // 找到快取物件
+            byte[] objectFromCache = await _distributedCache.GetAsync(tag);
+
+            if (objectFromCache != null)
+            {
+                var jsonToDeserialize = System.Text.Encoding.UTF8.GetString(objectFromCache);
+                var cachedResult = JsonConvert.DeserializeObject<ICollection<Articles>>(jsonToDeserialize);
+                if (cachedResult != null)
+                    return View(cachedResult);
+            }
+
+            var articles = (IQueryable<Articles>)_context.Articles;
+
+            if (string.IsNullOrWhiteSpace(tag) == false)
+                articles = articles.Where(m => m.Tags.Contains(tag));
+
+            // Serialize the response
+            byte[] objectToCache = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(articles.ToList());
+            var cacheEntryOptions = new DistributedCacheEntryOptions()
+                .SetSlidingExpiration(TimeSpan.FromSeconds(5))
+                .SetAbsoluteExpiration(TimeSpan.FromSeconds(10));
+
+            // Cache it
+            await _distributedCache.SetAsync(tag, objectToCache, cacheEntryOptions);
+            return View(articles.ToList());
+        }
+
 
         public IActionResult Privacy()
         {
