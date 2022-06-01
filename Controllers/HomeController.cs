@@ -7,6 +7,7 @@ using X.PagedList;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
 using Newtonsoft.Json;
+using MVCHomework6.Extensions;
 
 namespace MVCHomework6.Controllers
 {
@@ -26,7 +27,7 @@ namespace MVCHomework6.Controllers
 
         public IActionResult Index(int? page)
         {
-            var pageNumber = page ?? 1;
+            var pageNumber = page.DoTryGetNumber();
 
             // 每5筆為一分頁
             IPagedList<Articles> onePageOfArticles = _context.Articles.ToPagedList(pageNumber, 5);
