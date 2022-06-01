@@ -48,7 +48,7 @@ namespace MVCHomework6.Controllers
                     return View(cachedResult);
             }
 
-            var articles = (IQueryable<Articles>)_context.Articles;
+            IQueryable<Articles> articles = _context.Articles;
 
             if (string.IsNullOrWhiteSpace(tag) == false)
                 articles = articles.Where(m => m.Tags.Contains(tag));
@@ -77,7 +77,7 @@ namespace MVCHomework6.Controllers
                     return View(cachedResult);
             }
 
-            var articles = (IQueryable<Articles>)_context.Articles;
+            IQueryable<Articles> articles = _context.Articles;
 
             if (string.IsNullOrWhiteSpace(keyword) == false)
                 articles = articles.Where(m => m.Title.Contains(keyword) || m.Body.Contains(keyword));
