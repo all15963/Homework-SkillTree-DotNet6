@@ -1,9 +1,9 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IPagedList<MVCHomework6.Data.Database.Articles>
 @using X.PagedList.Mvc.Core;
 @using X.PagedList;
-@model IPagedList<MVCHomework6.Data.Database.Articles>
+@{
+    ViewData["Title"] = "Home Page";
+}
 
 @foreach (var item in Model)
 {
