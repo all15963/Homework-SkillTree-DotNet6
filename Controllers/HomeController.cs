@@ -35,7 +35,7 @@ namespace MVCHomework6.Controllers
             return View(onePageOfArticles);
         }
 
-        [Route("{Controller}/{Action}/{tag}")]
+        [Route("~/{tag}")]
         public async Task<IActionResult> TagList(string tag)
         {
             // 找到快取物件
