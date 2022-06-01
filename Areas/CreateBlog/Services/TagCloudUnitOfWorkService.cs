@@ -34,7 +34,7 @@ namespace MVCHomework6.Areas.CreateBlog.Services
 
         public void UpdateAmount(IEnumerable<string> tags)
         {
-            var tagClouds = _blogContext.TagCloud.Where(m => tags.Any(t => t == m.Name)).ToList();
+            var tagClouds = _blogContext.TagCloud.Where(m => tags.Contains(m.Name)).ToList();
             foreach (var tagCloud in tagClouds)
             {
                 tagCloud.Amount += 1;
