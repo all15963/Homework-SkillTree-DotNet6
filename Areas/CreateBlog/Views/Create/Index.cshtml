@@ -62,7 +62,10 @@
             format: "yyyy/mm/dd"
         });
         $(document).ready(function() {
-            $('.js-example-basic-multiple').select2();
+            $('.js-example-basic-multiple').select2({
+                tags: true,
+                tokenSeparators: [',', ' ']
+            });
         });
     </script>
 }

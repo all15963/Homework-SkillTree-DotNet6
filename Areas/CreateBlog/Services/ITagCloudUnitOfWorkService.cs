@@ -6,6 +6,7 @@ namespace MVCHomework6.Areas.CreateBlog.Services
     {
         List<SelectListItem> GetTagCloud();
         void UpdateAmount(IEnumerable<string> tags);
+        void AddNewTag(IEnumerable<string> tags);
         Task SaveAsync();
     }
 }

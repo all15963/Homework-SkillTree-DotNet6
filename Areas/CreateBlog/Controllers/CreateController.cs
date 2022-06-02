@@ -44,6 +44,7 @@ namespace MVCHomework6.Areas.CreateBlog.Controllers
                 string uploads = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
                 await _articleService.AddArticleAsync(model, uploads);
 
+                _tagCloudService.AddNewTag(model.Tags);
                 _tagCloudService.UpdateAmount(model.Tags);
 
                 await _tagCloudService.SaveAsync();

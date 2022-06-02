@@ -42,6 +42,25 @@ namespace MVCHomework6.Areas.CreateBlog.Services
             _tagCloudRepository.Update(tagClouds);
         }
 
+        public void AddNewTag(IEnumerable<string> tags)
+        {
+            var tagClouds = _blogContext.TagCloud.Select(m => m.Name).ToList();
+            var newTagClouds = tags.Where(m => !tagClouds.Contains(m)).ToList();
+            var modelList = new List<TagCloud>();
+            foreach (var item in newTagClouds)
+            {
+                var tag = new TagCloud
+                {
+                    Id = Guid.NewGuid(),
+                    Name = item,
+                    Amount = 1
+                };
+                modelList.Add(tag);
+            }
+
+            _tagCloudRepository.Insert(modelList);
+        }
+
         public async Task SaveAsync()
         {
             await _unitOfWork.SaveChangesAsync();
