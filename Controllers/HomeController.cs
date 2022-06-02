@@ -16,21 +16,23 @@ namespace MVCHomework6.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly BlogDbContext _context;
         private readonly IDistributedCache _distributedCache;
+        private readonly IConfiguration _configuration;
 
 
-        public HomeController(ILogger<HomeController> logger, BlogDbContext context, IDistributedCache distributedCache)
+        public HomeController(ILogger<HomeController> logger, BlogDbContext context, IDistributedCache distributedCache, IConfiguration configuration)
         {
-            _logger       = logger;
+            _logger = logger;
             _context = context;
             _distributedCache = distributedCache;
+            _configuration = configuration;
         }
 
         public IActionResult Index(int? page)
         {
             var pageNumber = page.DoTryGetNumber();
-
+            var pageSize = _configuration.GetValue<int>("PageXList:pageSize");
             // 每5筆為一分頁
-            IPagedList<Articles> onePageOfArticles = _context.Articles.ToPagedList(pageNumber, 5);
+            IPagedList<Articles> onePageOfArticles = _context.Articles.ToPagedList(pageNumber, pageSize);
 
             return View(onePageOfArticles);
         }

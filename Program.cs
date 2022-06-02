@@ -27,6 +27,10 @@ builder.Services.AddDistributedMemoryCache();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Add Json File
+builder.Configuration.AddJsonFile("appsettings.XPagedList.json", false, true);
+
+
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
