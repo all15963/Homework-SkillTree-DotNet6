@@ -30,9 +30,9 @@ namespace MVCHomework6.Controllers
         public IActionResult Index(int? page)
         {
             var pageNumber = page.DoTryGetNumber();
-            var pageSize = _configuration.GetValue<int>("PageXList:pageSize");
+            var pagedListModel = _configuration.GetSection("PageXList").Get<XPagedListModel>();
             // 每5筆為一分頁
-            IPagedList<Articles> onePageOfArticles = _context.Articles.ToPagedList(pageNumber, pageSize);
+            IPagedList<Articles> onePageOfArticles = _context.Articles.ToPagedList(pageNumber, pagedListModel.pageSize);
 
             return View(onePageOfArticles);
         }
