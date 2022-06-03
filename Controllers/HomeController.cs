@@ -8,6 +8,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
 using Newtonsoft.Json;
 using MVCHomework6.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace MVCHomework6.Controllers
 {
@@ -16,23 +17,22 @@ namespace MVCHomework6.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly BlogDbContext _context;
         private readonly IDistributedCache _distributedCache;
-        private readonly IConfiguration _configuration;
+        private readonly XPagedListModel _xPagedListModel;
 
 
-        public HomeController(ILogger<HomeController> logger, BlogDbContext context, IDistributedCache distributedCache, IConfiguration configuration)
+        public HomeController(ILogger<HomeController> logger, BlogDbContext context, IDistributedCache distributedCache, IOptions<XPagedListModel> xPagedListModel)
         {
             _logger = logger;
             _context = context;
             _distributedCache = distributedCache;
-            _configuration = configuration;
+            _xPagedListModel = xPagedListModel.Value;
         }
 
         public IActionResult Index(int? page)
         {
             var pageNumber = page.DoTryGetNumber();
-            var pagedListModel = _configuration.GetSection("PageXList").Get<XPagedListModel>();
             // 每5筆為一分頁
-            IPagedList<Articles> onePageOfArticles = _context.Articles.ToPagedList(pageNumber, pagedListModel.pageSize);
+            IPagedList<Articles> onePageOfArticles = _context.Articles.ToPagedList(pageNumber, _xPagedListModel.pageSize);
 
             return View(onePageOfArticles);
         }
